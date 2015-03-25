@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <constant name="struts.devMode" value="true" />
+    <constant name="struts.action.extension" value="action"/>
+    <package name="tree" extends="struts-default" namespace="/">
+    	<action name="getAllData" class="com.hed.myapp.action.TreeAction" method="getAllData">
+    		<result name="success">/index.jsp</result>
+    	</action>
+    	
+    	<action name="addTree" class="com.hed.myapp.action.TreeAction" method="addTree">
+    		<result type="redirect" name="success">getAllData.action</result>
+    	</action>
+    </package>
+    
+    <package name="activiti" extends="struts-default" namespace="/">
+    	<action name="login" class="com.hed.myapp.action.ActivitiAction" method="login">
+    		<result name="success">/leave.jsp</result>
+    	</action>
+    	
+    	<action name="submitLeave" class="com.hed.myapp.action.ActivitiAction" method="submitLeave">
+            <result name="success">/leave.jsp</result>
+        </action>
+        
+        <action name="getUnfinished" class="com.hed.myapp.action.ActivitiAction" method="getUnfinished">
+            <result name="success">/unfinished.jsp</result>
+        </action>
+    </package>
+</struts>
+
