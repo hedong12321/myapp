@@ -96,7 +96,7 @@ public class BaseServiceImpl implements BaseService {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		if (!CollectionUtils.isEmpty(list)) {
 			for (ProcessInstance instance : list) {
-				Leave leave = baseDao.queryLeaveLst(user.getId(), instance.getId());
+				Leave leave = baseDao.queryLeaveByUsrIdAndInsId(user.getId(), instance.getId());
 				if (leave != null) {
 					String businessKey = instance.getProcessInstanceId();
 					TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(businessKey);
@@ -119,6 +119,69 @@ public class BaseServiceImpl implements BaseService {
 				}
 			}
 		}
+		return voLst;
+	}
+	
+	/**
+	 * 获取待处理流程实例
+	 */
+	@Override
+	public List<LeaveVo> getDealWith(User user){
+		
+		List<LeaveVo> voLst = new ArrayList<LeaveVo>();
+		LeaveVo vo = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		
+		String usrId = user.getId();
+		// 根据当前用户的ID查询其已签收的任务
+		List<Task> allTasks = new ArrayList<Task>();
+		TaskQuery taskQuery = taskService.createTaskQuery().processDefinitionKey("myProcess")
+				.taskAssignee(usrId).orderByTaskId().desc().orderByTaskCreateTime().desc();
+		
+		List<Task> todoTasks = taskQuery.list();
+		allTasks.addAll(todoTasks);
+		
+		// 根据当前用户的ID查询其未签收的任务
+		taskQuery = taskService.createTaskQuery().processDefinitionKey("myProcess")
+				.taskCandidateUser(usrId).orderByTaskId().desc().orderByTaskCreateTime().desc();
+		//taskQuery = taskService.createTaskQuery().processDefinitionKey("myProcess")
+		//		.taskCandidateGroup("deptLeader").orderByTaskId().desc().orderByTaskCreateTime().desc();
+		List<Task> unsignedTasks = taskQuery.list();
+		allTasks.addAll(unsignedTasks);
+		
+		for (Task task : allTasks) {
+			// 获取流程实例ID
+			String processInstanceId = task.getProcessInstanceId();
+			// 获取流程
+			ProcessInstance instance = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId)
+					.active().singleResult();
+			// 从流程实例中获取请假对应的ID（businessKey）
+			String businessKey = instance.getBusinessKey();
+			Leave leave = baseDao.getLeaveById(businessKey);
+			
+			if (leave != null) {
+				vo = new LeaveVo();
+				vo.setId(leave.getId());
+				vo.setStartTime(sdf.format(leave.getStartTime()));
+				vo.setEndTime(sdf.format(leave.getEndTime()));
+				vo.setLeaveType(leave.getLeaveType());
+				vo.setReason(leave.getReason());
+				vo.setUserName(user.getFirstName() + user.getLastName());
+				vo.setDisposeUser(task.getAssignee());
+				vo.setCurrNode(task.getName());
+				vo.setProcessInstanceId(task.getProcessInstanceId());
+				
+				vo.setTaskId(task.getId());
+				vo.setInsId(instance.getId());
+				//vo.setDefId(instance.getProcessDefinitionId());
+				
+				System.out.println(task.getProcessInstanceId() + ":" + instance.getId());
+				System.out.println(task.getProcessDefinitionId() + ":" + instance.getProcessDefinitionId());
+				
+				voLst.add(vo);
+			}
+		}
+		
 		return voLst;
 	}
 }

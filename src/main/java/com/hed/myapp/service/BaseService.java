@@ -12,5 +12,13 @@ public interface BaseService {
 
 	public boolean saveLeave(LeaveVo leaveVo) throws ParseException;
 	
+	/**
+	 * 获取未完成流程实例
+	 */
 	public List<LeaveVo> getUnfinished(User user);
+	
+	/**
+	 * 获取待处理流程实例
+	 */
+	public List<LeaveVo> getDealWith(User user);
 }

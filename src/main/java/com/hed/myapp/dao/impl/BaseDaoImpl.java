@@ -59,7 +59,7 @@ public class BaseDaoImpl implements BaseDao {
 	 * 获取对应用户和流程实例的请假对象
 	 */
 	@Override
-	public Leave queryLeaveLst(String userId, String instanceId){
+	public Leave queryLeaveByUsrIdAndInsId(String userId, String instanceId){
 		String updateHql = " from Leave l where l.userId=:userId and l.processInstanceId=:processInstanceId";
 		Session session = getSession();
 		Query query = session.createQuery(updateHql);
@@ -69,4 +69,15 @@ public class BaseDaoImpl implements BaseDao {
 		return (Leave)query.uniqueResult();
 	}
 	
+	/**
+	 * 根据请假对象ID获取请假对象
+	 */
+	@Override
+	public Leave getLeaveById(String id) {
+		String leaveHql = "from Leave l where l.id=:id";
+		Query query = getSession().createQuery(leaveHql);
+		query.setString("id", id);
+		
+		return (Leave)query.uniqueResult();
+	}
 }

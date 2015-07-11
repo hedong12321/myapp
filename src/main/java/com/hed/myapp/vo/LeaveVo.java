@@ -31,6 +31,12 @@ public class LeaveVo implements Serializable {
 	private String currNode;
 	
 	private String processInstanceId;
+	
+	private String taskId;
+	
+	private String insId;
+	
+	private String defId;
 
 	public String getId() {
 		return id;
@@ -134,6 +140,30 @@ public class LeaveVo implements Serializable {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public String getInsId() {
+		return insId;
+	}
+
+	public void setInsId(String insId) {
+		this.insId = insId;
+	}
+
+	public String getDefId() {
+		return defId;
+	}
+
+	public void setDefId(String defId) {
+		this.defId = defId;
+	}
+
+	public String getTaskId() {
+		return taskId;
+	}
+
+	public void setTaskId(String taskId) {
+		this.taskId = taskId;
 	}
 
 }
