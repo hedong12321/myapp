@@ -94,6 +94,13 @@
                 <value>classpath*:/deployments/*</value>
             </list>
         </property>
+        <!-- 
+                          指定匹配多个资源时的发布处理方式:
+             default,把所有资源放在一个单独的发布包中，对这个发布包进行重复检测;
+             single-resource,为每个单独的资源创建一个发布包，并对这些发布包进行重复检测
+             resource-parent-folder,把放在同一个上级目录下的资源发布在一个单独的发布包中，并对发布包进行重复检测
+         -->
+        <property name="deploymentMode" value="single-resource" />
         <!-- 自定义表单字段类型 这个很重要 很重要 你不用明白他是什么意思 他就是必须的 自己在自己的项目里加上这个类然后指向他 -->
         <property name="customFormTypes">
             <list>
