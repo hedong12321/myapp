@@ -13,12 +13,12 @@ public interface BaseService {
 	public boolean saveLeave(LeaveVo leaveVo) throws ParseException;
 	
 	/**
-	 * »ñÈ¡Î´Íê³ÉÁ÷³ÌÊµÀı
+	 * è·å–æœªå®Œæˆæµç¨‹å®ä¾‹
 	 */
 	public List<LeaveVo> getUnfinished(User user);
 	
 	/**
-	 * »ñÈ¡´ı´¦ÀíÁ÷³ÌÊµÀı
+	 * è·å–å¾…å¤„ç†æµç¨‹å®ä¾‹
 	 */
 	public List<LeaveVo> getDealWith(User user);
 }

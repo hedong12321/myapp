@@ -6,22 +6,22 @@ import com.hed.myapp.entity.Leave;
 public interface BaseDao {
 
 	/**
-	 * 保存请假
+	 * 淇濆瓨璇峰亣
 	 */
 	public String saveLeave(Leave leave);
 	
 	/**
-	 * 更新请假，以保存流程实例id
+	 * 鏇存柊璇峰亣锛屼互淇濆瓨娴佺▼瀹炰緥id
 	 */
 	public boolean updateLeave(String id, String value);
 	
 	/**
-	 * 获取对应用户和流程实例的请假对象
+	 * 鑾峰彇瀵瑰簲鐢ㄦ埛鍜屾祦绋嬪疄渚嬬殑璇峰亣瀵硅薄
 	 */
 	public Leave queryLeaveByUsrIdAndInsId(String userId, String instanceId);
 	
 	/**
-	 * 根据请假对象ID获取请假对象
+	 * 鏍规嵁璇峰亣瀵硅薄ID鑾峰彇璇峰亣瀵硅薄
 	 */
 	public Leave getLeaveById(String id);
 }

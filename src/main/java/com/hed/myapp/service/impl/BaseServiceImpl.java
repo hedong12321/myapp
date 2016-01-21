@@ -63,15 +63,15 @@ public class BaseServiceImpl implements BaseService {
 			
 			String uuid = baseDao.saveLeave(leave);
 			if (StringUtils.isNotBlank(uuid)) {
-				// ÉèÖÃÆô¶¯Á÷³ÌÈËÔ±id£¬ÒıÇæ»á×Ô¶¯°Ñid±£´æµ½activiti:initiatorÖĞ
+				// è®¾ç½®å¯åŠ¨æµç¨‹äººå‘˜idï¼Œå¼•æ“ä¼šè‡ªåŠ¨æŠŠidä¿å­˜åˆ°activiti:initiatorä¸­
 				identityService.setAuthenticatedUserId(leaveVo.getUserId());
-				// ²åÈëÁ÷³Ì
+				// æ’å…¥æµç¨‹
 				Map<String, Object> variables = new HashMap<String, Object>();
 				ProcessInstance processInstance = 
 						runtimeService.startProcessInstanceByKey("myProcess", uuid, variables);
-				// »ñÈ¡Á÷³ÌÊµÀıid
+				// è·å–æµç¨‹å®ä¾‹id
 				String processInstanceId = processInstance.getId();
-				// ¸üĞÂÇë¼ÙĞÅÏ¢±í
+				// æ›´æ–°è¯·å‡ä¿¡æ¯è¡¨
 				if (StringUtils.isNotBlank(processInstanceId)) {
 					baseDao.updateLeave(uuid, processInstanceId);
 				}
@@ -82,7 +82,7 @@ public class BaseServiceImpl implements BaseService {
 	}
 	
 	/**
-	 * »ñÈ¡Î´Íê³ÉÁ÷³ÌÊµÀı
+	 * è·å–æœªå®Œæˆæµç¨‹å®ä¾‹
 	 */
 	@Override
 	public List<LeaveVo> getUnfinished(User user){
@@ -123,7 +123,7 @@ public class BaseServiceImpl implements BaseService {
 	}
 	
 	/**
-	 * »ñÈ¡´ı´¦ÀíÁ÷³ÌÊµÀı
+	 * è·å–å¾…å¤„ç†æµç¨‹å®ä¾‹
 	 */
 	@Override
 	public List<LeaveVo> getDealWith(User user){
@@ -133,7 +133,7 @@ public class BaseServiceImpl implements BaseService {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		
 		String usrId = user.getId();
-		// ¸ù¾İµ±Ç°ÓÃ»§µÄID²éÑ¯ÆäÒÑÇ©ÊÕµÄÈÎÎñ
+		// æ ¹æ®å½“å‰ç”¨æˆ·çš„IDæŸ¥è¯¢å…¶å·²ç­¾æ”¶çš„ä»»åŠ¡
 		List<Task> allTasks = new ArrayList<Task>();
 		TaskQuery taskQuery = taskService.createTaskQuery().processDefinitionKey("myProcess")
 				.taskAssignee(usrId).orderByTaskId().desc().orderByTaskCreateTime().desc();
@@ -141,7 +141,7 @@ public class BaseServiceImpl implements BaseService {
 		List<Task> todoTasks = taskQuery.list();
 		allTasks.addAll(todoTasks);
 		
-		// ¸ù¾İµ±Ç°ÓÃ»§µÄID²éÑ¯ÆäÎ´Ç©ÊÕµÄÈÎÎñ
+		// æ ¹æ®å½“å‰ç”¨æˆ·çš„IDæŸ¥è¯¢å…¶æœªç­¾æ”¶çš„ä»»åŠ¡
 		taskQuery = taskService.createTaskQuery().processDefinitionKey("myProcess")
 				.taskCandidateUser(usrId).orderByTaskId().desc().orderByTaskCreateTime().desc();
 		//taskQuery = taskService.createTaskQuery().processDefinitionKey("myProcess")
@@ -150,12 +150,12 @@ public class BaseServiceImpl implements BaseService {
 		allTasks.addAll(unsignedTasks);
 		
 		for (Task task : allTasks) {
-			// »ñÈ¡Á÷³ÌÊµÀıID
+			// è·å–æµç¨‹å®ä¾‹ID
 			String processInstanceId = task.getProcessInstanceId();
-			// »ñÈ¡Á÷³Ì
+			// è·å–æµç¨‹
 			ProcessInstance instance = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId)
 					.active().singleResult();
-			// ´ÓÁ÷³ÌÊµÀıÖĞ»ñÈ¡Çë¼Ù¶ÔÓ¦µÄID£¨businessKey£©
+			// ä»æµç¨‹å®ä¾‹ä¸­è·å–è¯·å‡å¯¹åº”çš„IDï¼ˆbusinessKeyï¼‰
 			String businessKey = instance.getBusinessKey();
 			Leave leave = baseDao.getLeaveById(businessKey);
 			

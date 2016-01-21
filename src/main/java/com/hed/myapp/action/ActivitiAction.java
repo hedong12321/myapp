@@ -16,7 +16,7 @@ import com.hed.myapp.vo.LeaveVo;
 public class ActivitiAction extends BaseAction {
 
 	/**
-	 * ĞòÁĞ»¯ID
+	 * åºåˆ—åŒ–ID
 	 */
 	private static final long serialVersionUID = -1077653780587008630L;
 
@@ -90,7 +90,7 @@ public class ActivitiAction extends BaseAction {
 	}
 
 	/**
-	 * µÇÂ¼
+	 * ç™»å½•
 	 */
 	public String login(){
 		
@@ -104,7 +104,7 @@ public class ActivitiAction extends BaseAction {
 	}
 	
 	/**
-	 * Çë¼Ù
+	 * è¯·å‡
 	 */
 	public String submitLeave(){
 		
@@ -119,7 +119,7 @@ public class ActivitiAction extends BaseAction {
 	}
 	
 	/**
-	 * »ñÈ¡Î´Íê³É¡¢´ı´¦Àí¡¢ÒÑÍê³ÉµÄÁ÷³Ì
+	 * è·å–æœªå®Œæˆã€å¾…å¤„ç†ã€å·²å®Œæˆçš„æµç¨‹
 	 */
 	public String getUnfinished(){
 		
@@ -130,7 +130,7 @@ public class ActivitiAction extends BaseAction {
 	}
 	
 	/**
-	 * Ç©ÊÕ
+	 * ç­¾æ”¶
 	 */
     public String sign(){
 		
@@ -140,7 +140,7 @@ public class ActivitiAction extends BaseAction {
 	}
     
     /**
-	 * ÉóÅú¡¢Ïú¼Ù
+	 * å®¡æ‰¹ã€é”€å‡
 	 */
     public String dealWith(){
 		
